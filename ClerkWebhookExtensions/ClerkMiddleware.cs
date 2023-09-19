@@ -31,7 +31,7 @@ namespace ClerkWebhookExtensions
 
                 var factory = httpContext.RequestServices.GetRequiredService<ClerkMiddlewareFactory>();
 
-                await factory.InvokeConsumer(payload, httpContext.RequestAborted);
+                await factory.InvokeConsumer(payload, factory.GetConsumer(), httpContext.RequestAborted);
             }
         }
     }

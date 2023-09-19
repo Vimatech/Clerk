@@ -1,27 +1,22 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClerkWebhookExtensions.Models.Common
 {
     public class ClerkEmailAddress
     {
         [JsonProperty("email_address")]
-        public string EmailAddress { get; set; }
+        public string EmailAddress { get; set; } = string.Empty;
 
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         [JsonProperty("linked_to")]
-        public List<object> LinkedTo { get; set; }
+        public List<object> LinkedTo { get; set; } = new List<object>();
 
         [JsonProperty("object")]
-        public string Object { get; set; }
+        public string Object { get; set; } = string.Empty;
 
         [JsonProperty("verification")]
-        public Verification Verification { get; set; }
+        public Verification Verification { get; set; } = null!;
     }
 }

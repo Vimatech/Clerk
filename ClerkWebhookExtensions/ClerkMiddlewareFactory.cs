@@ -40,13 +40,22 @@ namespace ClerkWebhookExtensions
                     throw new HttpRequestException();
                 }
 
-                if (Consumers.TryGetValue(payload.Type, out dynamic consumer) && data is not null)
+                if (TryGetConsumer(payload, out var consumer) && data is not null)
                 {
-                    return (Task) consumer.HandleAsync(data, cancellationToken);
+                    return consumer.HandleAsync(data, cancellationToken);
                 }
             }
 
             return Task.CompletedTask;
+        }
+
+        private bool TryGetConsumer(Payload payload, out IClerkConsumer<dynamic> consumer)
+        {
+            Consumers.TryGetValue(payload.Type, out var value);
+
+            consumer = value as IClerkConsumer<dynamic>?;
+
+            return consumer is not null;
         }
     }
 }
