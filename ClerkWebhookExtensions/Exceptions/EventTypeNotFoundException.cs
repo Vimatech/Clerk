@@ -21,7 +21,7 @@ namespace ClerkWebhookExtensions.Exceptions
 
         public static void ThrowIfNull(EventTypeAttribute? eventType)
         {
-            if (eventType is null) 
+            if (eventType == null) 
             {
                 throw new EventTypeNotFoundException(nameof(eventType));
             }

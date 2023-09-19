@@ -17,14 +17,13 @@ namespace ClerkWebhookExtensions.Builder
             _factory = factory;
         }
 
-        public void AddConsumer<TInterface, TImplementation, TPayload>()
-            where TInterface : class, IClerkConsumer<TPayload>
-            where TImplementation : class, TInterface
+        public void AddConsumer<TImplementation, TPayload>()
+            where TImplementation : class, IClerkConsumer<TPayload>
             where TPayload : class
         {
-            _services.AddTransient<TInterface, TImplementation>();
+            _services.AddTransient<IClerkConsumer<TPayload>, TImplementation>();
 
-            var consumer = _services.BuildServiceProvider().GetRequiredService<TInterface>();
+            var consumer = _services.BuildServiceProvider().GetRequiredService<IClerkConsumer<TPayload>>();
 
             ConsumerNotFoundException.ThrowIfNull(consumer);
 
