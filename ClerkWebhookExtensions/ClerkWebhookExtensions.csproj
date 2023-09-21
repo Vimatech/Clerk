@@ -10,5 +10,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Svix" Version="1.12.0" />
   </ItemGroup>
+  <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+  <VersionPrefix>v</VersionPrefix>
 
 </Project>
