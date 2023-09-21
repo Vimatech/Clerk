@@ -36,6 +36,6 @@ jobs:
           name: ${{ github.ref_name }}
           files: ${{ env.NUGET_DIRECTORY }}/*.nupkg
           tag_name: ${{ github.ref_name }}
-          prerelease: false
+          prerelease: true
           draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
