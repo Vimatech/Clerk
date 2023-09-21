@@ -3,35 +3,20 @@ using Vimatech.Clerk.Webhooks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddClerkWebhooks(webhookBuilder =>
 {
-    webhookBuilder.AddWebhook<UserCreatedEvent, UserCreatedWebhook>(_ => "user.created");
-    webhookBuilder.AddWebhook<UserDeletedEvent, UserDeletedWebhook>(@event => @event.UserDeleted);
+    webhookBuilder.AddWebhook<UserCreatedEvent, UserCreatedWebhook>(@event => @event.UserCreated)
+        .AddValidation(new("whsec_LbagXYSOomN3puMwVySFmgXVCxgjIJ6"));
+
+    webhookBuilder.AddWebhook<UserDeletedEvent, UserDeletedWebhook>(@event => @event.UserDeleted)
+        .AddValidation(new("whsec_LbagXYSOomN3puMwVySFmgXVCxgjIJ6C"));
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseClerkWebhooks();
-
-app.MapControllers();
 
 app.Run();
 
@@ -39,7 +24,7 @@ app.Run();
 public class UserCreatedEvent
 {
     [JsonProperty("first_name")]
-    public string FirstName { get; set; }
+    public string  FirstName { get; set; }
     
     [JsonProperty("last_name")]
     public string LastName { get; set; }
