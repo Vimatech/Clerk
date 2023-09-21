@@ -44,7 +44,7 @@ builder.Services.AddClerk(webhookBuilder => {
  
 ```
 
-You singin secret can be found in the clerk dashboard under webhooks -> endpoints -> signin secret.
+Your signin secret can be found in the clerk dashboard under webhooks -> endpoints -> signin secret.
 
 Notice that not using validation would be a security risk.
 
