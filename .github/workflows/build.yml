@@ -6,6 +6,7 @@ on:
 
 env:
   NUGET_DIRECTORY: ${{ github.workspace }}/nuget
+  PACKAGE_VERSION: ${{ github.ref_name }}
 
 jobs:
   build:
@@ -28,7 +29,7 @@ jobs:
       #     run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
 
       - name: Pack
-        run: dotnet pack ClerkWebhookExtensions/ClerkWebhookExtensions.csproj --configuration Release --no-build --no-restore --output ${{ env.NUGET_DIRECTORY }}
+        run: dotnet pack ClerkWebhookExtensions/ClerkWebhookExtensions.csproj --configuration Release --no-build --no-restore --output ${{ env.NUGET_DIRECTORY }} -p:PackageVersion=${{ env.PACKAGE_VERSION }}
 
       - name: Upload artifact
         uses: softprops/action-gh-release@v1
