@@ -14,7 +14,6 @@
   <PropertyGroup>
     <Version></Version>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <VersionPrefix>v</VersionPrefix>
   </PropertyGroup>
 
 </Project>
