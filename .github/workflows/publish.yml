@@ -15,6 +15,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh release download ${{ github.event.release.tag_name }} --dir ${{ env.NUGET_DIRECTORY }}
 
       - name: Setup .NET
