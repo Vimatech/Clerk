@@ -1,0 +1,41 @@
+name: build
+on:
+  push:
+    tags:
+      - v*
+
+env:
+  NUGET_DIRECTORY: ${{ github.workspace }}/nuget
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      - name: Restore dependencies
+        run: dotnet restore ClerkWebhookExtensions/ClerkWebhookExtensions.csproj
+
+      - name: Build
+        run: dotnet build ClerkWebhookExtensions/ClerkWebhookExtensions.csproj --configuration Release --no-restore
+
+      #   - name: Test
+      #     run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
+
+      - name: Pack
+        run: dotnet pack ClerkWebhookExtensions/ClerkWebhookExtensions.csproj --configuration Release --no-build --no-restore --output ${{ env.NUGET_DIRECTORY }}
+
+      - name: Upload artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ github.ref_name }}
+          files: ${{ env.NUGET_DIRECTORY }}/*.nupkg
+          tag_name: ${{ github.ref_name }}
+          prerelease: false
+          draft: false
+          token: ${{ secrets.GITHUB_TOKEN }}
