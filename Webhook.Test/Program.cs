@@ -6,10 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddClerkWebhooks(webhookBuilder =>
 {
     webhookBuilder.AddWebhook<UserCreatedEvent, UserCreatedWebhook>(@event => @event.UserCreated)
-        .AddValidation(new("whsec_LbagXYSOomN3puMwVySFmgXVCxgjIJ6"));
+        .AddValidation(new("test"));
 
     webhookBuilder.AddWebhook<UserDeletedEvent, UserDeletedWebhook>(@event => @event.UserDeleted)
-        .AddValidation(new("whsec_LbagXYSOomN3puMwVySFmgXVCxgjIJ6C"));
+        .AddValidation(new("test"));
 });
 
 var app = builder.Build();
