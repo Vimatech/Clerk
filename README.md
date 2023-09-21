@@ -37,9 +37,12 @@ using Vimatech.Clerk.Webhook
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddClerk(webhookBuilder => {
-    webhookBuilder.AddConsumer<UserCreated, MyWebhookEvent>()
-        .AddValidation(new("signin-secret"));
-    // Add more consumers here
+    webhookBuilder.AddWebhook<UserCreated, MyWebhookEvent>()
+        .AddValidation(new WebhookValidationOptions<UserCreated {
+            SigninSecret = "signin-secret"
+            });
+
+    // Add more webhooks and validations here
 });
  
 ```
