@@ -37,5 +37,5 @@ jobs:
           files: ${{ env.NUGET_DIRECTORY }}/*.nupkg
           tag_name: ${{ github.ref_name }}
           prerelease: true
-          draft: false
+          draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
