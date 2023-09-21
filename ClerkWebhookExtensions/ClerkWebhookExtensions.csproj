@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <PackageId>Vimatech.Clerk.Webhooks</PackageId>
     <Version></Version>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
   </PropertyGroup>
