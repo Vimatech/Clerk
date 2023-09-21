@@ -13,56 +13,54 @@ dotnet add package ClerkWebhookExtension
 
 ```
 
-Create a class that implements the consumer interface:
+Create a class that implements the webhook interface:
 
 ```csharp
-import ClerkWebhookExtension.Models;
-import ClerkWebhookExtension.Events;
+using Vimatech.Clerk.Webhook
 
-public class MyConsumer : IClerkConsumer<UserCreatedData>
+public class MyWebhookEvent : IWebhookEvent<UserCreated>
 {
-    public Task HandleAsync(UserCreatedData data, CancellationToken cancellationToken)
+    public Task HandleAsync(UserCreated data, CancellationToken cancellationToken)
     {
         // Do something with the webhook event
     }
 }
 ```
 
-### Register the consumer
+### Register the webhook and validation
 
-Register the consumer in the service collection:
+Register the webhook and validation in the service collection:
 
 ```csharp
-using ClerkWebhookExtension;
-using ClerkWebhookExtension.Models;
-using ClerkWebhookExtension.Events;
+using Vimatech.Clerk.Webhook
 
-public class Startup
-{
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddClerk(builder => {
-            builder.AddConsumer<UserCreatedData, MyConsumer>();
-            // Add more consumers here
-        });
-    }
-}
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddClerk(webhookBuilder => {
+    webhookBuilder.AddConsumer<UserCreated, MyWebhookEvent>()
+        .AddValidation(new("signin-secret"));
+    // Add more consumers here
+});
+ 
 ```
+
+You singin secret can be found in the clerk dashboard under webhooks -> endpoints -> signin secret.
+
+Notice that not using validation would be a security risk.
 
 ### Add the middleware
 
 Add the middleware to the request pipeline:
 
 ```csharp
-using ClerkWebhookExtension;
+using Vimatech.Clerk.Webhook
 
-public class Startup
-{
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        app.UseClerk(options => {
-            options.Endpointprefix = "/webhook";
-        });
-    }
-}
+app = WebApplication.Create(args);
+
+app.UseClerk(options => {
+    options.Endpointprefix = "/endpoint";
+});
+
 ```
+
+The endpoint prefix is the prefix that will be used for the webhook endpoint. The default is "/clerk".
