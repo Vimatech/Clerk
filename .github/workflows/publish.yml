@@ -1,0 +1,24 @@
+name: publish
+on:
+  release:
+    types: [published]
+
+env:
+  NUGET_DIRECTORY: ${{ github.workspace }}/nuget
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download release
+        run: gh release download ${{ github.event.release.tag_name }} --dir ${{ env.NUGET_DIRECTORY }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+
+      - name: Publish NuGet package
+        run: dotnet nuget push ${{ env.NUGET_DIRECTORY }}/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
