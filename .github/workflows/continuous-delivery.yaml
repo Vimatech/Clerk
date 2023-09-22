@@ -37,7 +37,7 @@ jobs:
 
       - name: Pack .NET NuGet
         run: |
-          dotnet pack --configuration Release --no-build --no-restore --output artifacts
+          dotnet pack src/Clerk.Webhooks/Clerk.Webhooks.csproj --configuration Release --no-build --no-restore --output artifacts
 
       - name: Publish .NET NuGet Package
         run: |
