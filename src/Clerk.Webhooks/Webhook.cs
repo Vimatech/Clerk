@@ -4,7 +4,7 @@ namespace Clerk.Webhooks;
 /// Base implementation of a webhook.
 /// </summary>
 /// <typeparam name="TEvent">The event to be handled - payload registered as data property</typeparam>
-public sealed class Webhook<TEvent> where TEvent : class
+public class Webhook<TEvent> where TEvent : class
 {
     public string Object { get; set; } = null!;
     

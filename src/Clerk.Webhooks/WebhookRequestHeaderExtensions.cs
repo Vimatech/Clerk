@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace Clerk.Webhooks;
 
@@ -10,10 +11,14 @@ public static class WebhookRequestHeaderExtensions
    public static async Task VerifyWebhookHeaders(this HttpRequest request, string signingSecret)
    {
       var svix = new Svix.Webhook(signingSecret);
-
-      using var reader = new StreamReader(request.Body);
+      
+      request.EnableBuffering();
+      
+      var reader = new StreamReader(request.Body);
 
       var body = await reader.ReadToEndAsync();
+
+      request.Body.Position = 0;
 
       var headers = new WebHeaderCollection();
       

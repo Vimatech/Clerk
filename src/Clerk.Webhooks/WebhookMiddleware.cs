@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -37,10 +38,12 @@ public sealed class WebhookMiddleware
         {
             await httpContext.Request.VerifyWebhookHeaders(secret);
         }
-
-        using var reader = new StreamReader(httpContext.Request.Body);
+        
+        var reader = new StreamReader(httpContext.Request.Body);
         
         var body = await reader.ReadToEndAsync();
+        
+        httpContext.Request.Body.Seek(0, SeekOrigin.Begin);
         
         
         var webhook = JsonConvert.DeserializeObject<Webhook<dynamic>>(body);
@@ -54,7 +57,7 @@ public sealed class WebhookMiddleware
         
         var eventType = provider.GetEventType(webhook.Type);
         
-        var @event = JsonConvert.DeserializeObject(webhook.Data.ToString(), typeof(Webhook<>).MakeGenericType(eventType));
+        dynamic @event = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(webhook), typeof(Webhook<>).MakeGenericType(eventType)) ?? throw new InvalidOperationException();
 
         
         dynamic handler = httpContext.RequestServices.GetRequiredService(typeof(IWebhookHandler<>).MakeGenericType(eventType));
