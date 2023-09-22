@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clerk.Webhooks", "src\Clerk.Webhooks\Clerk.Webhooks.csproj", "{50A4402F-117A-41BC-A741-BBEADBD22DC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clerk", "src\Clerk\Clerk.csproj", "{91DC025E-2BB1-4816-9231-D0CDC2BAA9A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clerk.Webhooks.Tests", "test\Clerk.Webhooks.Tests\Clerk.Webhooks.Tests.csproj", "{717F5189-36E5-4C2B-8B23-C8C1860EE901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clerk.Tests", "test\Clerk.Tests\Clerk.Tests.csproj", "{C9C3F7E0-A947-415D-9C65-A09F27917935}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50A4402F-117A-41BC-A741-BBEADBD22DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A4402F-117A-41BC-A741-BBEADBD22DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A4402F-117A-41BC-A741-BBEADBD22DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A4402F-117A-41BC-A741-BBEADBD22DC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DC025E-2BB1-4816-9231-D0CDC2BAA9A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DC025E-2BB1-4816-9231-D0CDC2BAA9A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DC025E-2BB1-4816-9231-D0CDC2BAA9A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DC025E-2BB1-4816-9231-D0CDC2BAA9A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717F5189-36E5-4C2B-8B23-C8C1860EE901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717F5189-36E5-4C2B-8B23-C8C1860EE901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717F5189-36E5-4C2B-8B23-C8C1860EE901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717F5189-36E5-4C2B-8B23-C8C1860EE901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C3F7E0-A947-415D-9C65-A09F27917935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C3F7E0-A947-415D-9C65-A09F27917935}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C3F7E0-A947-415D-9C65-A09F27917935}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C3F7E0-A947-415D-9C65-A09F27917935}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
