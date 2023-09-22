@@ -28,7 +28,7 @@ jobs:
 
       - name: Clean & Build .NET
         run: |
-          dotnet clean --configuration Release --no-restore
+          dotnet clean --configuration Release
           dotnet build --configuration Release --no-restore
 
       - name: Test .NET
