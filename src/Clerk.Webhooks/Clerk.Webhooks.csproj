@@ -11,8 +11,13 @@
         <Nullable>enable</Nullable>
         <PackageTags>clerk;webhook;authentication;management;user;organization</PackageTags>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
+    
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
