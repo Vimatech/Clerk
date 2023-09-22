@@ -42,8 +42,8 @@ public sealed class WebhookMiddleware
         var reader = new StreamReader(httpContext.Request.Body);
         
         var body = await reader.ReadToEndAsync();
-        
-        httpContext.Request.Body.Seek(0, SeekOrigin.Begin);
+
+        httpContext.Request.Body.Position = 0;
         
         
         var webhook = JsonConvert.DeserializeObject<Webhook<dynamic>>(body);
