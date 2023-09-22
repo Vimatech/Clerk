@@ -29,4 +29,10 @@ public interface IWebhookBuilder
     /// <typeparam name="THandler">The handler type</typeparam>
     void AddHandler<TEvent, THandler>(Expression<Func<WebhookEvent, string>> expression) where TEvent : class
         where THandler : class, IWebhookHandler<TEvent>;
+    
+    /// <summary>
+    /// Configures the webhook middleware to use <a href="https://www.svix.com/">svix</a> for webhook verification of signing secret. 
+    /// </summary>
+    /// <param name="signingSecret">A string representing the signing secrets</param>
+    void AddSigningSecret(string signingSecret);
 }

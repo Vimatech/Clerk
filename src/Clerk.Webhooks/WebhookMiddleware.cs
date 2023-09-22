@@ -9,12 +9,12 @@ public sealed class WebhookMiddleware
 {
     private readonly RequestDelegate _next;
     
-    private readonly WebhookOptions _options;
+    private readonly WebhookMiddlewareOptions _middlewareOptions;
 
-    public WebhookMiddleware(RequestDelegate next, WebhookOptions options)
+    public WebhookMiddleware(RequestDelegate next, WebhookMiddlewareOptions middlewareOptions)
     {
         _next = next;
-        _options = options;
+        _middlewareOptions = middlewareOptions;
     }
 
     public async Task InvokeAsync(HttpContext httpContext)
@@ -23,16 +23,21 @@ public sealed class WebhookMiddleware
 
         var path = httpContext.Request.Path;
         
-        if (!method.Equals(HttpMethods.Post) || !Regex.IsMatch(path, $"^/?{Regex.Escape(_options.RoutePrefix)}/?$"))
+        if (!method.Equals(HttpMethods.Post) || !Regex.IsMatch(path, $"^/?{Regex.Escape(_middlewareOptions.RoutePrefix)}/?$"))
         {
             await _next(httpContext);
 
             return;
         }
         
+        
         var provider = httpContext.RequestServices.GetRequiredService<WebhookEventProvider>();
-        
-        
+
+        if (provider.GetSigningSecret() is { } secret)
+        {
+            await httpContext.Request.VerifyWebhookHeaders(secret);
+        }
+
         using var reader = new StreamReader(httpContext.Request.Body);
         
         var body = await reader.ReadToEndAsync();
@@ -53,7 +58,6 @@ public sealed class WebhookMiddleware
 
         
         dynamic handler = httpContext.RequestServices.GetRequiredService(typeof(IWebhookHandler<>).MakeGenericType(eventType));
-
         
         await handler.HandleAsync(@event, httpContext.RequestAborted);
 

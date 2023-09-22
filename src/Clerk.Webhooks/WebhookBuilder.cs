@@ -21,8 +21,7 @@ internal sealed class WebhookBuilder : IWebhookBuilder
     {
         InjectHandlerWithEvent<TEvent, THandler>(@event);
     }
-
-
+    
     /// <inheritdoc cref="AddHandler{TEvent,THandler}(Expression{Func{WebhookEvent,string}})"/>
     public void AddHandler<TEvent, THandler>(Expression<Func<WebhookEvent, string>> expression) where TEvent : class
         where THandler : class, IWebhookHandler<TEvent>
@@ -32,6 +31,11 @@ internal sealed class WebhookBuilder : IWebhookBuilder
         var @event = func(new WebhookEvent());
 
         InjectHandlerWithEvent<TEvent, THandler>(@event);
+    }
+
+    public void AddSigningSecret(string signingSecret)
+    {
+        _provider.AddSigningSecret(signingSecret);
     }
 
     private void InjectHandlerWithEvent<TEvent, THandler>(string @event) where TEvent : class where THandler : class, IWebhookHandler<TEvent>
