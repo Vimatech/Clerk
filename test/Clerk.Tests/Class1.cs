@@ -1,4 +1,4 @@
-﻿namespace Vimatech.Clerk.Webhooks;
+﻿namespace Clerk.Tests;
 
 public interface IWebhookHandler<TEvent> where TEvent : class
 {
