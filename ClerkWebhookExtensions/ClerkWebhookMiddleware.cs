@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Svix;
 using System.Net;
 using System.Text.RegularExpressions;
+using Svix.Exceptions;
 
 namespace Vimatech.Clerk.Webhooks;
 
@@ -40,18 +41,24 @@ internal sealed class ClerkWebhookMiddleware
         var payload = JsonConvert.DeserializeObject<Payload>(body);
 
 
-
         var provider = httpContext.RequestServices.GetRequiredService<WebhookProvider>();
 
-        var eventType = provider.ResolveHandlerByEventName(payload.Type);
+        var eventType = provider.ResolveHandlerByEventName(payload!.Type); // payload.Type should throw an error if null
 
-
-
-        dynamic validatorOptions = httpContext.RequestServices.GetRequiredService(typeof(WebhookValidationOptions<>).MakeGenericType(eventType));
-
-        if (validatorOptions is not null)
+        try
         {
-            Validate(validatorOptions, httpContext.Request.Headers, body);
+            dynamic validatorOptions =
+                httpContext.RequestServices.GetRequiredService(
+                    typeof(WebhookValidationOptions<>).MakeGenericType(eventType));
+
+            if (validatorOptions is not null)
+            {
+                Validate(validatorOptions, httpContext.Request.Headers, body);
+            }
+        }
+        catch (WebhookVerificationException ex)
+        {
+            // Do something, this is an verify exception from svix
         }
 
         dynamic @event = JsonConvert.DeserializeObject(payload.Data.ToString(), eventType);
