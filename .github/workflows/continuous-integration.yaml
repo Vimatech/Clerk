@@ -1,0 +1,47 @@
+name: Continuous Integration
+
+on:
+  push:
+    paths:
+      - 'src/Clerk.Webhooks'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET 7.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      - name: Restore .NET
+        run: |
+          dotnet restore
+
+      - name: Clean & Build .NET
+        run: |
+          dotnet clean --configuration Release
+          dotnet build --configuration Release --no-restore
+
+      - name: Test .NET
+        run: |
+          dotnet test --configuration Release --no-restore --no-build --verbosity normal
+
+      - name: Pack .NET NuGet
+        run: |
+          dotnet pack src/Clerk.Webhooks/Clerk.Webhooks.csproj --configuration Release --no-build --no-restore --output artifacts
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: artifacts/**/*
