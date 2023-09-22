@@ -1,4 +1,4 @@
-# ClerkWebhookExtension
+# Clek Extensions
 
 Clerk webhook extension is a library for c# to help you create a webhook extension for [clerk.com](https://clerk.com/).
 
@@ -9,7 +9,7 @@ Install the package from nuget:
 
 ```bash
 
-dotnet add package ClerkWebhookExtension
+dotnet add package Vimatech.Clerk.Webhooks --version [![Latest Release](https://img.shields.io/github/v/release/Vimatech/Vimatech.Clerk)](https://github.com/Vimatech/Vimatech.Clerk/releases)
 
 ```
 
